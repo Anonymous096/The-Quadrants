@@ -21,7 +21,7 @@ const data = {
     },
     {
       title: "Exam Preperation",
-      url: "/dashboard/Exam-prep",
+      url: "/dashboard/exam",
       icon: Command,
     },
     {
