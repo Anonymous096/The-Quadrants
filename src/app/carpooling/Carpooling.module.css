@@ -1,429 +1,716 @@
-/* Keyframes for animations */
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* Keyframes for Animations */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
   }
-  
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.03);
-    }
-    100% {
-      transform: scale(1);
-    }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .container {
-    min-height: 100vh;
-    background: #f8fafc;
-    padding: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .header {
-    text-align: left;
-    margin-bottom: 2rem;
-    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
   }
-  
-  .headerTitle {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 0.5rem;
+  70% {
+    transform: scale(1.05);
   }
-  
-  .headerSubtitle {
-    font-size: 1rem;
-    color: #64748b;
-    font-weight: 400;
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .driverControls {
-    max-width: 64rem;
-    margin: 0 auto 1.5rem;
-    text-align: left;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .addButton {
-    background-color: #3b82f6;
-    color: #ffffff;
-    padding: 0.5rem 1.5rem;
-    border-radius: 0.375rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  50% {
+    transform: scale(1.05);
   }
-  
-  .addButton:hover {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: pulse 0.5s infinite;
+  100% {
+    transform: scale(1);
   }
-  
-  .formSection {
-    max-width: 36rem;
-    margin: 0 auto 1.5rem;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
   }
-  
-  .form {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
   }
-  
-  .formTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
+  100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
   }
-  
-  .formGroup {
-    margin-bottom: 1rem;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
   }
-  
-  .formLabel {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 0.5rem;
+  100% {
+    transform: scale(4);
+    opacity: 0;
   }
-  
-  .formInput {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    color: #1f2937;
-    transition: all 0.3s ease;
+}
+
+@keyframes slideInMessage {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
   }
-  
-  .formInput:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  .formActions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: flex-end;
+}
+
+@keyframes typing {
+  0% {
+    content: ".";
   }
-  
-  .submitButton {
-    background-color: #3b82f6;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
+  33% {
+    content: "..";
   }
-  
-  .submitButton:hover {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  66% {
+    content: "...";
   }
-  
-  .cancelButton {
-    background: #f1f5f9;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
+  100% {
+    content: ".";
   }
-  
-  .cancelButton:hover {
-    background: #e5e7eb;
-    transform: translateY(-1px);
-  }
-  
-  .postsSection {
-    max-width: 64rem;
-    margin: 0 auto;
-  }
-  
-  .myRidesSection {
-    max-width: 64rem;
-    margin: 2rem auto;
-  }
-  
-  .sectionTitle {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
-  }
-  
-  .emptyState {
-    text-align: center;
-    padding: 2rem 0;
-  }
-  
-  .emptyStateText {
-    font-size: 1rem;
-    color: #64748b;
-    font-weight: 400;
-  }
-  
-  .emptyStateHint {
-    font-size: 0.875rem;
-    color: #9ca3af;
-    margin-top: 0.5rem;
-  }
-  
-  .postCard {
-    background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    border-left: 4px solid #3b82f6;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .postCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .postHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .postTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .postActions {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .editButton,
-  .requestButton {
-    background-color: #10b981;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  
-  .editButton:hover,
-  .requestButton:hover {
-    background-color: #059669;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .requestButton:disabled {
-    background-color: #6b7280;
-    cursor: not-allowed;
-  }
-  
-  .deleteButton {
-    background-color: #ef4444;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  
-  .deleteButton:hover {
-    background-color: #dc2626;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .chatButton {
-    background-color: #3b82f6;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  
-  .chatButton:hover {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+}
+
+.container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 2rem;
+  animation: slideInFromLeft 0.6s ease-out;
+}
+
+.headerTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.headerTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 50%;
+  height: 3px;
+  background: #3b82f6;
+  transition: width 0.3s ease-out;
+}
+
+.headerTitle:hover::after {
+  width: 100%;
+}
+
+.headerSubtitle {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 400;
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.driverControls {
+  max-width: 64rem;
+  margin: 0 auto 1.5rem;
+  text-align: left;
+}
+
+.addButton {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: glow 1.5s infinite;
+}
+
+.addButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.addButton:active::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+.formSection {
+  max-width: 36rem;
+  margin: 0 auto 1.5rem;
+  animation: popIn 0.5s ease-out;
+}
+
+.form {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #3b82f6;
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.formTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease-out;
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  pointer-events: none;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem;
+  padding-top: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #1f2937;
+  transition: all 0.3s ease-out;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  animation: glow 1.5s infinite;
+}
+
+.formInput:focus + .formLabel,
+.formInput:not(:placeholder-shown) + .formLabel {
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 0.75rem;
+  color: #3b82f6;
+  background: #ffffff;
+  padding: 0 0.25rem;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.submitButton {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: pulse 0.5s infinite;
+}
+
+.submitButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.submitButton:active::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+.cancelButton {
+  background: #f1f5f9;
+  color: #1f2937;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-out;
+}
+
+.cancelButton:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.postsSection {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.myRidesSection {
+  max-width: 64rem;
+  margin: 2rem auto;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  animation: slideInFromLeft 0.6s ease-out;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem 0;
+  animation: zoomIn 0.6s ease-out;
+}
+
+.emptyStateText {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.emptyStateHint {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+.postCard {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border-left: 4px solid #3b82f6;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+}
+
+.postCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.postCard:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left-color: #2563eb;
+}
+
+.postCard:hover::before {
+  opacity: 1;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.postTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  position: relative;
+}
+
+.postTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #3b82f6;
+  transition: width 0.3s ease-out;
+}
+
+.postCard:hover .postTitle::after {
+  width: 100%;
+}
+
+.postActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton,
+.requestButton {
+  background-color: #10b981;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.editButton:hover,
+.requestButton:hover {
+  background-color: #059669;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: glow 1.5s infinite;
+}
+
+.editButton::before,
+.requestButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.editButton:active::before,
+.requestButton:active::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+.requestButton:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  animation: none;
+}
+
+.deleteButton {
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: glow 1.5s infinite;
+}
+
+.deleteButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.deleteButton:active::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+.chatButton {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.chatButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: glow 1.5s infinite;
+}
+
+.chatButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.chatButton:active::before {
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
   .detailsGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
   }
-  
-  @media (min-width: 768px) {
-    .detailsGrid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .detailItem {
-    margin-bottom: 0.5rem;
-    animation: slideIn 0.5s ease-out;
-  }
-  
-  .detailLabel {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 0.25rem;
-  }
-  
-  .detailValue {
-    font-size: 0.875rem;
-    color: #64748b;
-    font-weight: 400;
-  }
-  
-  /* Modal Styles */
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    width: 500px;
-  }
-  
-  .modalTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
-  }
-  
-  .modalActions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-  }
-  
-  .chatMessages {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 0.375rem;
-  }
-  
-  .messageSent {
-    text-align: right;
-    margin-bottom: 0.5rem;
-  }
-  
-  .messageReceived {
-    text-align: left;
-    margin-bottom: 0.5rem;
-  }
-  
-  .messageSent p {
-    background: #3b82f6;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    display: inline-block;
-  }
-  
-  .messageReceived p {
-    background: #e5e7eb;
-    color: #1f2937;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    display: inline-block;
-  }
-  
-  .messageTimestamp {
-    display: block;
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin-top: 0.25rem;
-  }
-  
-  .chatForm {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .chatInput {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-  }
-  
-  .chatInput:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-  }
-  
-  /* Animation Classes */
-  .fadeIn {
-    animation: fadeIn 0.6s ease-out;
-  }
-  
-  .slideIn {
-    animation: slideIn 0.5s ease-out;
-  }
+}
+
+.detailItem {
+  margin-bottom: 0.5rem;
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+.detailLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.detailValue {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  width: 500px;
+  animation: popIn 0.5s ease-out;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.chatMessages {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.375rem;
+  position: relative;
+}
+
+.messageSent,
+.messageReceived {
+  margin-bottom: 0.5rem;
+  animation: slideInMessage 0.3s ease-out;
+}
+
+.messageSent {
+  text-align: right;
+}
+
+.messageReceived {
+  text-align: left;
+}
+
+.messageSent p {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  display: inline-block;
+  transition: transform 0.3s ease-out;
+}
+
+.messageSent p:hover {
+  transform: scale(1.02);
+}
+
+.messageReceived p {
+  background: #e5e7eb;
+  color: #1f2937;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  display: inline-block;
+  transition: transform 0.3s ease-out;
+}
+
+.messageReceived p:hover {
+  transform: scale(1.02);
+}
+
+.messageTimestamp {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+.chatForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-out;
+}
+
+.chatInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  animation: glow 1.5s infinite;
+}
+
+/* Animation Classes */
+.fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.zoomIn {
+  animation: zoomIn 0.6s ease-out;
+}
+
+.slideIn {
+  animation: slideInFromLeft 0.5s ease-out;
+}
