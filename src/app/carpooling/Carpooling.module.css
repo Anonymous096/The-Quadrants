@@ -104,33 +104,20 @@
 }
 
 .header {
-  text-align: left;
+  text-align: center; /* Center the header */
   margin-bottom: 2rem;
   animation: slideInFromLeft 0.6s ease-out;
 }
 
 .headerTitle {
-  font-size: 2rem;
+  font-size: 2.5rem; /* Larger font size */
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 0.5rem;
-  position: relative;
-  display: inline-block;
 }
 
 .headerTitle::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 50%;
-  height: 3px;
-  background: #3b82f6;
-  transition: width 0.3s ease-out;
-}
-
-.headerTitle:hover::after {
-  width: 100%;
+  content: none; /* Remove the underline */
 }
 
 .headerSubtitle {
@@ -142,17 +129,17 @@
 
 .driverControls {
   max-width: 64rem;
-  margin: 0 auto 1.5rem;
-  text-align: left;
+  margin: 0 auto 2rem;
+  text-align: center; /* Center the button */
 }
 
 .addButton {
   background-color: #3b82f6;
   color: #ffffff;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.375rem;
+  padding: 0.75rem 2rem; /* Larger padding */
+  border-radius: 2rem; /* More rounded corners */
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 1rem; /* Larger font size */
   transition: all 0.3s ease-out;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -194,7 +181,7 @@
 .form {
   background: #ffffff;
   padding: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem; /* More rounded corners */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
   position: relative;
@@ -275,7 +262,7 @@
   background-color: #3b82f6;
   color: #ffffff;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 2rem; /* More rounded corners */
   font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.3s ease-out;
@@ -313,7 +300,7 @@
   background: #f1f5f9;
   color: #1f2937;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 2rem; /* More rounded corners */
   font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.3s ease-out;
@@ -362,36 +349,24 @@
 
 .postCard {
   background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb; /* Subtle border */
+  border-left: 4px solid #3b82f6; /* Blue left border */
+  border-radius: 1rem; /* More rounded corners */
   padding: 1.5rem;
-  border-left: 4px solid #3b82f6;
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease-out;
 }
 
-.postCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
-}
-
 .postCard:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); /* Subtle lift on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
   border-left-color: #2563eb;
 }
 
-.postCard:hover::before {
-  opacity: 1;
+.postCard::before {
+  content: none; /* Remove the gradient background animation */
 }
 
 .postHeader {
@@ -402,25 +377,14 @@
 }
 
 .postTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: 1.5rem; /* Larger font size */
+  font-weight: 700;
+  color: #3b82f6; /* Blue title */
   position: relative;
 }
 
 .postTitle::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #3b82f6;
-  transition: width 0.3s ease-out;
-}
-
-.postCard:hover .postTitle::after {
-  width: 100%;
+  content: none; /* Remove the underline */
 }
 
 .postActions {
@@ -433,7 +397,7 @@
   background-color: #10b981;
   color: #ffffff;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 2rem; /* More rounded corners */
   font-size: 0.875rem;
   font-weight: 600;
   transition: all 0.3s ease-out;
@@ -482,7 +446,7 @@
   background-color: #ef4444;
   color: #ffffff;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 2rem; /* More rounded corners */
   font-size: 0.875rem;
   font-weight: 600;
   transition: all 0.3s ease-out;
@@ -520,7 +484,7 @@
   background-color: #3b82f6;
   color: #ffffff;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+  border-radius: 2rem; /* More rounded corners */
   font-size: 0.875rem;
   font-weight: 600;
   transition: all 0.3s ease-out;
@@ -556,13 +520,13 @@
 
 .detailsGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  grid-template-columns: 1fr 1fr; /* Two-column layout */
+  gap: 1rem; /* More spacing between items */
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .detailsGrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr; /* Stack on smaller screens */
   }
 }
 
@@ -573,9 +537,10 @@
 
 .detailLabel {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600; /* Bold labels */
   color: #374151;
   margin-bottom: 0.25rem;
+  text-transform: uppercase; /* Match the uppercase style */
 }
 
 .detailValue {
@@ -602,7 +567,7 @@
 .modal {
   background: #ffffff;
   padding: 2rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem; /* More rounded corners */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   max-width: 90%;
   width: 500px;
