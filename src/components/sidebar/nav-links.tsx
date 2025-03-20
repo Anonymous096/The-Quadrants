@@ -37,13 +37,13 @@ const data = {
   ],
   projects: [
     {
-      name: "Project 1",
-      url: "/dashboard/project/1",
+      name: "General Posts",
+      url: "/dashboard/posts",
       icon: Command,
     },
     {
-      name: "Project 2",
-      url: "/dashboard/project/2",
+      name: "Car Pooling",
+      url: "/dashboard/pooling",
       icon: Command,
     },
   ],

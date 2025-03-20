@@ -6,6 +6,8 @@ import {
     text,
     timestamp,
     varchar,
+    json,
+    boolean,
   } from "drizzle-orm/pg-core";
   
   export const userSystemEnum = pgEnum("user_system_enum", ["system", "user"]);
@@ -43,6 +45,42 @@ import {
     stripePriceId: varchar("stripe_price_id", { length: 256 }),
     stripeCurrentPeriodEnd: timestamp("stripe_current_period_ended_at"),
   });
+  
+  export const posts = pgTable("posts", {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    content: json("content").notNull(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    published: boolean("published").notNull().default(true),
+    coverImage: text("cover_image"),
+  });
+  
+  export const comments = pgTable("comments", {
+    id: serial("id").primaryKey(),
+    content: text("content").notNull(),
+    postId: integer("post_id")
+      .references(() => posts.id)
+      .notNull(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    parentId: integer("parent_id").references((): any => comments.id),
+  });
+  
+  export const likes = pgTable("likes", {
+    id: serial("id").primaryKey(),
+    postId: integer("post_id")
+      .references(() => posts.id)
+      .notNull(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  });
+  
+  export type Post = typeof posts.$inferSelect;
+  export type Comment = typeof comments.$inferSelect;
+  export type Like = typeof likes.$inferSelect;
   
   // Drizzle-orm
   // drizzle-kit
