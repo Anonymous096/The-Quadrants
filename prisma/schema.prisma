@@ -29,6 +29,7 @@ model User {
   comments      Comment[]
   likes         Like[]
 
+  busRoutes     BusRoute[]
   @@map("users")
 }
 
@@ -149,4 +150,18 @@ model Like {
 
   @@unique([postId, userId])
   @@map("likes")
+}
+
+model BusRoute {
+  id          String   @id @default(uuid())
+  adminId     String   @map("admin_id") // References the User who uploaded it (admin)
+  title       String   // e.g., "Route A: Campus to Downtown"
+  routeData   Json     // JSON object storing route details (e.g., stops, times)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  admin       User     @relation(fields: [adminId], references: [id])
+
+  @@map("bus_routes")
 }

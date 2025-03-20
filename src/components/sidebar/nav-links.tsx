@@ -30,6 +30,11 @@ const data = {
       icon: Command,
     },
     {
+      title: "Bus Routing",
+      url: "/bus-routing",
+      icon: Command,
+    },
+    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: Command,

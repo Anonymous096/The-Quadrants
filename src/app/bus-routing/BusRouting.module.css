@@ -1,0 +1,326 @@
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
+    padding: 0; /* Remove padding since layout.tsx already has p-6 */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .headerTitle {
+    font-size: 2.75rem;
+    font-weight: 900;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #1e40af, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .headerSubtitle {
+    font-size: 1.25rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+  
+  .adminControls {
+    max-width: 64rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  
+  .addButton {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  }
+  
+  .addButton:hover {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+    animation: pulse 0.5s infinite;
+  }
+  
+  .formSection {
+    max-width: 36rem;
+    margin: 0 auto 2rem;
+  }
+  
+  .form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  }
+  
+  .formTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .formLabel {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #1f2937;
+    transition: all 0.3s ease;
+  }
+  
+  .formInput:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: scale(1.01);
+  }
+  
+  .formActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .submitButton {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  }
+  
+  .cancelButton {
+    background: #f1f5f9;
+    color: #1f2937;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .cancelButton:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+  }
+  
+  .routesSection {
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+  
+  .emptyState {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  
+  .emptyStateText {
+    font-size: 1.25rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .emptyStateHint {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+  }
+  
+  .routeCard {
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border-left: 6px solid #3b82f6;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .routeCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent);
+    pointer-events: none;
+  }
+  
+  .routeCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-left-color: #2563eb;
+  }
+  
+  .routeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .routeTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    background: linear-gradient(to right, #1f2937, #4b5563);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .routeActions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .updateButton {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .updateButton:hover {
+    background: linear-gradient(90deg, #059669, #10b981);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  }
+  
+  .deleteButton {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .deleteButton:hover {
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  }
+  
+  .detailsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .detailsGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .detailItem {
+    margin-bottom: 0.75rem;
+    animation: slideIn 0.5s ease-out;
+  }
+  
+  .detailLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detailValue {
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
+  
+  /* Animation Classes */
+  .fadeIn {
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .slideIn {
+    animation: slideIn 0.5s ease-out;
+  }
