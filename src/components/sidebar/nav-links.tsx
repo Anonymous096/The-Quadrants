@@ -35,6 +35,11 @@ const data = {
       icon: Command,
     },
     {
+      title: "Carpooling",
+      url: "/carpooling",
+      icon: Command,
+    },
+    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: Command,
