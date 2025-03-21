@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
-import { posts, likes } from '@/lib/db/schema';
-import { desc, eq } from 'drizzle-orm';
+import { posts, likes, comments } from '@/lib/db/schema';
+import { desc, eq, and, sql } from 'drizzle-orm';
 
 export async function POST(req: Request) {
   try {
@@ -46,30 +46,69 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
+    console.log('GET /api/posts - Start');
     const session = await auth();
     const userId = session?.userId;
+    
+    console.log('Auth check:', { userId });
+    
     if (!userId) {
+      console.log('Unauthorized - no userId');
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const allPosts = await db.query.posts.findMany({
-      orderBy: [desc(posts.createdAt)],
-      with: {
-        likes: {
-          where: eq(likes.userId, userId),
-        },
-        _count: {
-          columns: {
-            likes: true,
-            comments: true,
-          },
-        },
-      },
-    });
+    console.log('Fetching posts from database...');
+    const allPosts = await db.select().from(posts)
+      .orderBy(desc(posts.createdAt));
+    
+    console.log('Posts fetched:', allPosts.length);
 
-    // Fetch all users data from Clerk for the posts
+    // Get likes count and comments for each post
+    const postsWithLikesAndComments = await Promise.all(
+      allPosts.map(async (post) => {
+        const likesCount = await db.select({ count: sql`count(*)` })
+          .from(likes)
+          .where(eq(likes.postId, post.id));
+        
+        // Fetch comments with their creation time
+        const postComments = await db.select()
+          .from(comments)
+          .where(eq(comments.postId, post.id))
+          .orderBy(desc(comments.createdAt));
+        
+        const isLiked = await db.select()
+          .from(likes)
+          .where(and(
+            eq(likes.postId, post.id),
+            eq(likes.userId, userId)
+          ))
+          .then(result => result.length > 0);
+
+        return {
+          ...post,
+          _count: {
+            likes: Number(likesCount[0].count),
+            comments: postComments.length,
+          },
+          comments: postComments,
+          isLiked,
+        };
+      })
+    );
+
+    console.log('Posts processed with likes and comments');
+
+    // Get unique user IDs from both posts and comments
+    const userIds = new Set([
+      ...postsWithLikesAndComments.map(post => post.userId),
+      ...postsWithLikesAndComments.flatMap(post => 
+        post.comments.map(comment => comment.userId)
+      )
+    ]);
+
+    // Fetch all users data from Clerk
     const users = await Promise.all(
-      [...new Set(allPosts.map(post => post.userId))].map(async (userId) => {
+      [...userIds].map(async (userId) => {
         try {
           const user = await fetch(
             `https://api.clerk.dev/v1/users/${userId}`,
@@ -96,21 +135,29 @@ export async function GET() {
       })
     );
 
+    console.log('Users fetched from Clerk');
+
     const usersMap = Object.fromEntries(users.map(user => [user.id, user]));
 
-    const transformedPosts = allPosts.map(post => ({
+    const transformedPosts = postsWithLikesAndComments.map(post => ({
       ...post,
-      isLiked: post.likes?.length > 0,
-      likes: undefined,
       user: usersMap[post.userId] || {
         name: 'Unknown User',
         image: null,
       },
+      comments: post.comments.map(comment => ({
+        ...comment,
+        user: usersMap[comment.userId] || {
+          name: 'Unknown User',
+          image: null,
+        }
+      }))
     }));
 
+    console.log('GET /api/posts - Success');
     return NextResponse.json(transformedPosts);
   } catch (error) {
-    console.error('[POSTS_GET]', error);
+    console.error('[POSTS_GET] Error:', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
 } 

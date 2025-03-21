@@ -8,6 +8,17 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Input } from "../ui/input";
 
+interface Comment {
+  id: number;
+  content: string;
+  userId: string;
+  createdAt: string;
+  user: {
+    name: string;
+    image?: string;
+  };
+}
+
 interface PostCardProps {
   post: {
     id: number;
@@ -24,6 +35,7 @@ interface PostCardProps {
       comments: number;
     };
     isLiked?: boolean;
+    comments: Comment[];
   };
   onLike: (postId: number) => Promise<void>;
   onComment: (postId: number, content: string) => Promise<void>;
@@ -33,7 +45,7 @@ export function PostCard({ post, onLike, onComment }: PostCardProps) {
   const [isLiking, setIsLiking] = useState(false);
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
-  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   const handleLike = async () => {
     setIsLiking(true);
@@ -51,7 +63,6 @@ export function PostCard({ post, onLike, onComment }: PostCardProps) {
     try {
       await onComment(post.id, comment);
       setComment("");
-      setShowCommentInput(false);
     } finally {
       setIsCommenting(false);
     }
@@ -75,7 +86,6 @@ export function PostCard({ post, onLike, onComment }: PostCardProps) {
       <CardContent>
         <h2 className="text-xl font-bold mb-2">{post.title}</h2>
         <div className="prose max-w-none">
-          {/* Render the Tiptap content here */}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
       </CardContent>
@@ -101,7 +111,7 @@ export function PostCard({ post, onLike, onComment }: PostCardProps) {
             variant="ghost"
             size="sm"
             className="flex items-center gap-2"
-            onClick={() => setShowCommentInput(!showCommentInput)}
+            onClick={() => setShowComments(!showComments)}
           >
             <MessageCircle className="h-5 w-5" />
             <span>{post._count.comments}</span>
@@ -112,21 +122,51 @@ export function PostCard({ post, onLike, onComment }: PostCardProps) {
           </Button>
         </div>
 
-        {showCommentInput && (
-          <div className="flex items-center gap-2 w-full">
-            <Input
-              placeholder="Write a comment..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="flex-1"
-            />
-            <Button
-              onClick={handleComment}
-              disabled={!comment.trim() || isCommenting}
-              size="sm"
-            >
-              {isCommenting ? "Posting..." : "Post"}
-            </Button>
+        {/* Comments section */}
+        {showComments && (
+          <div className="w-full space-y-4">
+            <div className="flex items-center gap-2 w-full">
+              <Input
+                placeholder="Write a comment..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="flex-1"
+              />
+              <Button
+                onClick={handleComment}
+                disabled={!comment.trim() || isCommenting}
+                size="sm"
+              >
+                {isCommenting ? "Posting..." : "Post"}
+              </Button>
+            </div>
+
+            {/* Comments list */}
+            <div className="space-y-3">
+              {post.comments.map((comment) => (
+                <div key={comment.id} className="flex items-start gap-3 p-2">
+                  <Avatar className="w-8 h-8">
+                    <AvatarImage src={comment.user?.image || undefined} />
+                    <AvatarFallback>
+                      {comment.user?.name?.[0] || "?"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-sm">
+                        {comment.user?.name || "Unknown User"}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {formatDistanceToNow(new Date(comment.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </span>
+                    </div>
+                    <p className="text-sm mt-1">{comment.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </CardFooter>

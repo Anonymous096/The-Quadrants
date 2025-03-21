@@ -6,6 +6,8 @@ import { PostCard } from "@/components/post/PostCard";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 interface Post {
   id: number;
@@ -22,27 +24,61 @@ interface Post {
     comments: number;
   };
   isLiked: boolean;
+  comments: {
+    id: number;
+    content: string;
+    userId: string;
+    createdAt: string;
+    user: {
+      name: string;
+      image?: string;
+    };
+  }[];
 }
 
 export default function PostsPage() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
   const [showEditor, setShowEditor] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/auth/sign-in");
+    }
+  }, [isLoaded, isSignedIn, router]);
+
   const fetchPosts = async () => {
     try {
+      console.log("Fetching posts...");
       const response = await fetch("/api/posts");
+
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
-        throw new Error("Failed to fetch posts");
+        const errorData = await response.json().catch(() => null);
+        console.error("Error response:", {
+          status: response.status,
+          statusText: response.statusText,
+          data: errorData,
+          headers: Object.fromEntries(response.headers.entries()),
+        });
+        throw new Error(
+          `Failed to fetch posts: ${response.status} ${response.statusText}`
+        );
       }
+
       const data = await response.json();
+      console.log("Posts fetched successfully:", data.length);
       setPosts(data);
     } catch (error) {
       console.error("Error fetching posts:", error);
       toast({
         title: "Error",
-        description: "Failed to load posts",
+        description:
+          error instanceof Error ? error.message : "Failed to load posts",
         variant: "destructive",
       });
     } finally {
@@ -51,8 +87,10 @@ export default function PostsPage() {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (isLoaded && isSignedIn) {
+      fetchPosts();
+    }
+  }, [isLoaded, isSignedIn]);
 
   const handleCreatePost = async (title: string, content: any) => {
     try {
@@ -176,7 +214,7 @@ export default function PostsPage() {
           {posts.map((post) => (
             <PostCard
               key={post.id}
-              post={post}
+              post={{ ...post, createdAt: new Date(post.createdAt) }}
               onLike={handleLike}
               onComment={handleComment}
             />

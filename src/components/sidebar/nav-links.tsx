@@ -26,7 +26,7 @@ const data = {
     },
     {
       title: "Interview Preperation",
-      url: "/dashboard/interview-prep",
+      url: "/dashboard/interview",
       icon: Command,
     },
     {
@@ -37,13 +37,13 @@ const data = {
   ],
   projects: [
     {
-      name: "General Posts",
-      url: "/dashboard/posts",
+      name: "Bus Routes & Schedules",
+      url: "/dashboard/pooling",
       icon: Command,
     },
     {
-      name: "Car Pooling",
-      url: "/dashboard/pooling",
+      name: "General posts",
+      url: "/posts",
       icon: Command,
     },
   ],

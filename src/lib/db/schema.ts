@@ -8,6 +8,7 @@ import {
     varchar,
     json,
     boolean,
+    time,
   } from "drizzle-orm/pg-core";
   
   export const userSystemEnum = pgEnum("user_system_enum", ["system", "user"]);
@@ -78,9 +79,38 @@ import {
     createdAt: timestamp("created_at").notNull().defaultNow(),
   });
   
+  export const busStops = pgTable("bus_stops", {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    location: text("location").notNull(),
+    description: text("description"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  });
+  
+  export const busRoutes = pgTable("bus_routes", {
+    id: serial("id").primaryKey(),
+    routeName: text("route_name").notNull(),
+    description: text("description"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  });
+  
+  export const busSchedules = pgTable("bus_schedules", {
+    id: serial("id").primaryKey(),
+    routeName: text("route_name").notNull(),
+    stopName: text("stop_name").notNull(),
+    location: text("location").notNull(),
+    arrivalTime: text("arrival_time").notNull(),
+    departureTime: text("departure_time").notNull(),
+    sequence: integer("sequence").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  });
+  
   export type Post = typeof posts.$inferSelect;
   export type Comment = typeof comments.$inferSelect;
   export type Like = typeof likes.$inferSelect;
+  export type BusStop = typeof busStops.$inferSelect;
+  export type BusRoute = typeof busRoutes.$inferSelect;
+  export type BusSchedule = typeof busSchedules.$inferSelect;
   
   // Drizzle-orm
   // drizzle-kit

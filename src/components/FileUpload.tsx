@@ -63,29 +63,39 @@ const FileUpload = () => {
       }
     },
   });
+
   return (
-    <div className="p-2 bg-white rounded-xl">
+    <div className="w-full">
       <div
         {...getRootProps({
           className:
-            "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
+            "border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-all duration-200",
         })}
       >
         <input {...getInputProps()} />
-        {uploading ? (
-          <>
-            {/* loading state */}
-            <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
-            <p className="mt-2 text-sm text-slate-400">
-              Spilling Tea to GPT...
-            </p>
-          </>
-        ) : (
-          <>
-            <Inbox className="w-10 h-10 text-blue-500" />
-            <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
-          </>
-        )}
+        <div className="flex flex-col items-center justify-center py-12 px-4">
+          {uploading ? (
+            <>
+              <Loader2 className="h-12 w-12 text-blue-500 animate-spin mb-4" />
+              <p className="text-base font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Processing your document...
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Please wait while we upload your file
+              </p>
+            </>
+          ) : (
+            <>
+              <Inbox className="w-12 h-12 text-blue-500 mb-4" />
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Drop your file here
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+                or click to browse (PDF only, max 10MB)
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
