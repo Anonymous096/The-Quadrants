@@ -21,12 +21,27 @@ const data = {
     },
     {
       title: "Exam Preperation",
-      url: "/dashboard/exam",
+      url: "/dashboard/exam", // Updated URL from the second file
       icon: Command,
     },
     {
       title: "Interview Preperation",
       url: "/dashboard/interview-prep",
+      icon: Command,
+    },
+    {
+      title: "Bus Routing",
+      url: "/bus-routing", // From the first file
+      icon: Command,
+    },
+    {
+      title: "Carpooling",
+      url: "/carpooling", // From the first file
+      icon: Command,
+    },
+    {
+      title: "Comunity",
+      url: "/comunity", // From the first file
       icon: Command,
     },
     {
@@ -37,13 +52,18 @@ const data = {
   ],
   projects: [
     {
-      name: "General Posts",
-      url: "/dashboard/posts",
+      name: "Project 1",
+      url: "/dashboard/project/1", // From the first file
       icon: Command,
     },
     {
-      name: "Car Pooling",
-      url: "/dashboard/pooling",
+      name: "Project 2",
+      url: "/dashboard/project/2", // From the first file
+      icon: Command,
+    },
+    {
+      name: "General Posts",
+      url: "/dashboard/posts", // From the second file
       icon: Command,
     },
   ],
