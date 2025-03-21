@@ -1,11 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import styles from "./Carpooling.module.css";
 
@@ -31,14 +26,12 @@ interface Message {
 }
 
 export default function Carpooling() {
-  // Hardcoded user (replace with real auth later)
   const currentUser = {
     name: "Current User",
     email: "user@example.com",
     isDriver: true, // Toggle this to test driver/passenger views
   };
 
-  // State for carpool posts
   const [posts, setPosts] = useState<CarpoolPost[]>([
     {
       id: "1",
@@ -54,7 +47,6 @@ export default function Carpooling() {
     },
   ]);
 
-  // State for the form
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formMode, setFormMode] = useState<"add" | "edit">("add");
   const [formData, setFormData] = useState({
@@ -70,16 +62,12 @@ export default function Carpooling() {
     preferences: "",
   });
 
-  // State for modals
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<CarpoolPost | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-
-  // State for passenger's joined rides
   const [myRides, setMyRides] = useState<CarpoolPost[]>([]);
 
-  // Form handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -187,7 +175,6 @@ export default function Carpooling() {
     setIsFormOpen(false);
   };
 
-  // Modal handlers
   const openRequestModal = (post: CarpoolPost) => {
     setSelectedPost(post);
     setIsRequestModalOpen(true);
@@ -228,430 +215,432 @@ export default function Carpooling() {
   };
 
   return (
-    <div className={styles.container}>
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <Link href="/dashboard" className="hover:text-primary">
+    <div className={styles.wrapper}>
+      {/* Sidebar */}
+      <aside className={styles.sidebar}>
+        <div className={styles.sidebarHeader}>
+          <h2 className={styles.sidebarTitle}>Navigation</h2>
+        </div>
+        <nav className={styles.sidebarNav}>
+          <Link href="/dashboard" className={styles.sidebarLink}>
             Dashboard
           </Link>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>Carpooling</BreadcrumbItem>
-      </Breadcrumb>
+          <Link href="/carpooling" className={styles.sidebarLinkActive}>
+            Carpooling
+          </Link>
+        </nav>
+      </aside>
 
-      {/* Header */}
-      <header className={styles.header}>
-        <h1 className={styles.headerTitle}>Carpooling</h1>
-        <p className={styles.headerSubtitle}>
-          Connect with drivers and passengers for campus rides
-        </p>
-      </header>
+      {/* Main Content */}
+      <main className={styles.mainContent}>
+        <div className={styles.container}>
+          <header className={styles.header}>
+            <h1 className={styles.headerTitle}>Carpooling</h1>
+            <p className={styles.headerSubtitle}>
+              Connect with drivers and passengers for campus rides
+            </p>
+          </header>
 
-      {/* Driver Controls */}
-      {currentUser.isDriver && (
-        <section className={styles.driverControls}>
-          <button onClick={openAddForm} className={styles.addButton}>
-            Create Carpool Post
-          </button>
-        </section>
-      )}
-
-      {/* Form for Creating/Editing Posts */}
-      {currentUser.isDriver && isFormOpen && (
-        <section className={`${styles.formSection} ${styles.fadeIn}`}>
-          <form
-            onSubmit={formMode === "add" ? handleAddPost : handleEditPost}
-            className={styles.form}
-          >
-            <h2 className={styles.formTitle}>
-              {formMode === "add" ? "Create Carpool Post" : "Edit Carpool Post"}
-            </h2>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Vehicle Type</label>
-              <input
-                type="text"
-                name="vehicleType"
-                value={formData.vehicleType}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., Sedan"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Capacity</label>
-              <input
-                type="number"
-                name="capacity"
-                value={formData.capacity}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                min="1"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Start Location</label>
-              <input
-                type="text"
-                name="start"
-                value={formData.start}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., Campus"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>End Location</label>
-              <input
-                type="text"
-                name="end"
-                value={formData.end}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., Downtown"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Stops (comma-separated)</label>
-              <input
-                type="text"
-                name="stops"
-                value={formData.stops}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., Library, Mall"
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Date</label>
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Time</label>
-              <input
-                type="time"
-                name="time"
-                value={formData.time}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Cost ($)</label>
-              <input
-                type="number"
-                name="cost"
-                value={formData.cost}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                min="0"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Preferences</label>
-              <textarea
-                name="preferences"
-                value={formData.preferences}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., No smoking, please be on time"
-              />
-            </div>
-            <div className={styles.formActions}>
-              <button type="submit" className={styles.submitButton}>
-                {formMode === "add" ? "Create Post" : "Update Post"}
+          {currentUser.isDriver && (
+            <section className={styles.driverControls}>
+              <button onClick={openAddForm} className={styles.addButton}>
+                Create Carpool Post
               </button>
-              <button
-                type="button"
-                onClick={resetForm}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </section>
-      )}
+            </section>
+          )}
 
-      {/* Carpool Posts */}
-      <section className={styles.postsSection}>
-        <h2 className={styles.sectionTitle}>Available Rides</h2>
-        {posts.length === 0 ? (
-          <div className={`${styles.emptyState} ${styles.fadeIn}`}>
-            <p className={styles.emptyStateText}>No carpool posts available yet.</p>
-            {currentUser.isDriver && (
-              <p className={styles.emptyStateHint}>
-                Create a new post using the button above.
-              </p>
-            )}
-          </div>
-        ) : (
-          <div>
-            {posts.map((post, index) => (
-              <div
-                key={post.id}
-                className={`${styles.postCard} ${styles.fadeIn}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+          {currentUser.isDriver && isFormOpen && (
+            <section className={styles.formSection}>
+              <form
+                onSubmit={formMode === "add" ? handleAddPost : handleEditPost}
+                className={styles.form}
               >
-                <div className={styles.postHeader}>
-                  <h3 className={styles.postTitle}>
-                    {post.route.start} to {post.route.end}
-                  </h3>
-                  <div className={styles.postActions}>
-                    {currentUser.email === post.driver.email ? (
-                      <>
-                        <button
-                          onClick={() => openEditForm(post)}
-                          className={styles.editButton}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDeletePost(post.id)}
-                          className={styles.deleteButton}
-                        >
-                          Delete
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => openRequestModal(post)}
-                          className={styles.requestButton}
-                          disabled={post.passengers.some((p) => p.email === currentUser.email)}
-                        >
-                          {post.passengers.some((p) => p.email === currentUser.email)
-                            ? "Joined"
-                            : "Request Ride"}
-                        </button>
-                        <button
-                          onClick={() => openChatModal(post)}
-                          className={styles.chatButton}
-                        >
-                          Contact Driver
-                        </button>
-                      </>
-                    )}
-                  </div>
+                <h2 className={styles.formTitle}>
+                  {formMode === "add" ? "Create Carpool Post" : "Edit Carpool Post"}
+                </h2>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Vehicle Type</label>
+                  <input
+                    type="text"
+                    name="vehicleType"
+                    value={formData.vehicleType}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., Sedan"
+                    required
+                  />
                 </div>
-                <div className={styles.detailsGrid}>
-                  <div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Driver</p>
-                      <p className={styles.detailValue}>{post.driver.name}</p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Vehicle</p>
-                      <p className={styles.detailValue}>
-                        {post.vehicle.type} (Capacity: {post.vehicle.capacity})
-                      </p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Route</p>
-                      <p className={styles.detailValue}>
-                        {post.route.start} → {post.route.stops.join(" → ")} → {post.route.end}
-                      </p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Schedule</p>
-                      <p className={styles.detailValue}>
-                        {post.schedule.date} at {post.schedule.time}
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Cost</p>
-                      <p className={styles.detailValue}>${post.cost}</p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Preferences</p>
-                      <p className={styles.detailValue}>{post.preferences || "None"}</p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Passengers</p>
-                      <p className={styles.detailValue}>
-                        {post.passengers.length > 0
-                          ? post.passengers.map((p) => p.name).join(", ")
-                          : "None"}
-                      </p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Posted On</p>
-                      <p className={styles.detailValue}>
-                        {new Date(post.createdAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </p>
-                    </div>
-                  </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Capacity</label>
+                  <input
+                    type="number"
+                    name="capacity"
+                    value={formData.capacity}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    min="1"
+                    required
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* My Rides Section */}
-      {!currentUser.isDriver && myRides.length > 0 && (
-        <section className={styles.myRidesSection}>
-          <h2 className={styles.sectionTitle}>My Rides</h2>
-          {myRides.map((ride, index) => (
-            <div
-              key={ride.id}
-              className={`${styles.postCard} ${styles.fadeIn}`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className={styles.postHeader}>
-                <h3 className={styles.postTitle}>
-                  {ride.route.start} to {ride.route.end}
-                </h3>
-                <div className={styles.postActions}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Start Location</label>
+                  <input
+                    type="text"
+                    name="start"
+                    value={formData.start}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., Campus"
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>End Location</label>
+                  <input
+                    type="text"
+                    name="end"
+                    value={formData.end}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., Downtown"
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Stops (comma-separated)</label>
+                  <input
+                    type="text"
+                    name="stops"
+                    value={formData.stops}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., Library, Mall"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Date</label>
+                  <input
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Time</label>
+                  <input
+                    type="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Cost ($)</label>
+                  <input
+                    type="number"
+                    name="cost"
+                    value={formData.cost}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    min="0"
+                    required
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Preferences</label>
+                  <textarea
+                    name="preferences"
+                    value={formData.preferences}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., No smoking, please be on time"
+                  />
+                </div>
+                <div className={styles.formActions}>
+                  <button type="submit" className={styles.submitButton}>
+                    {formMode === "add" ? "Create Post" : "Update Post"}
+                  </button>
                   <button
-                    onClick={() => openChatModal(ride)}
-                    className={styles.chatButton}
+                    type="button"
+                    onClick={resetForm}
+                    className={styles.cancelButton}
                   >
-                    Contact Driver
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </section>
+          )}
+
+          <section className={styles.postsSection}>
+            <h2 className={styles.sectionTitle}>Available Rides</h2>
+            {posts.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p className={styles.emptyStateText}>No carpool posts available yet.</p>
+                {currentUser.isDriver && (
+                  <p className={styles.emptyStateHint}>
+                    Create a new post using the button above.
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div>
+                {posts.map((post, index) => (
+                  <div
+                    key={post.id}
+                    className={styles.postCard}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className={styles.postHeader}>
+                      <h3 className={styles.postTitle}>
+                        {post.route.start} to {post.route.end}
+                      </h3>
+                      <div className={styles.postActions}>
+                        {currentUser.email === post.driver.email ? (
+                          <>
+                            <button
+                              onClick={() => openEditForm(post)}
+                              className={styles.editButton}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeletePost(post.id)}
+                              className={styles.deleteButton}
+                            >
+                              Delete
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => openRequestModal(post)}
+                              className={styles.requestButton}
+                              disabled={post.passengers.some((p) => p.email === currentUser.email)}
+                            >
+                              {post.passengers.some((p) => p.email === currentUser.email)
+                                ? "Joined"
+                                : "Request Ride"}
+                            </button>
+                            <button
+                              onClick={() => openChatModal(post)}
+                              className={styles.chatButton}
+                            >
+                              Contact Driver
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className={styles.detailsGrid}>
+                      <div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Driver</p>
+                          <p className={styles.detailValue}>{post.driver.name}</p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Vehicle</p>
+                          <p className={styles.detailValue}>
+                            {post.vehicle.type} (Capacity: {post.vehicle.capacity})
+                          </p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Route</p>
+                          <p className={styles.detailValue}>
+                            {post.route.start} → {post.route.stops.join(" → ")} → {post.route.end}
+                          </p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Schedule</p>
+                          <p className={styles.detailValue}>
+                            {post.schedule.date} at {post.schedule.time}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Cost</p>
+                          <p className={styles.detailValue}>${post.cost}</p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Preferences</p>
+                          <p className={styles.detailValue}>{post.preferences || "None"}</p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Passengers</p>
+                          <p className={styles.detailValue}>
+                            {post.passengers.length > 0
+                              ? post.passengers.map((p) => p.name).join(", ")
+                              : "None"}
+                          </p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Posted On</p>
+                          <p className={styles.detailValue}>
+                            {new Date(post.createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {!currentUser.isDriver && myRides.length > 0 && (
+            <section className={styles.myRidesSection}>
+              <h2 className={styles.sectionTitle}>My Rides</h2>
+              {myRides.map((ride, index) => (
+                <div
+                  key={ride.id}
+                  className={styles.postCard}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className={styles.postHeader}>
+                    <h3 className={styles.postTitle}>
+                      {ride.route.start} to {ride.route.end}
+                    </h3>
+                    <div className={styles.postActions}>
+                      <button
+                        onClick={() => openChatModal(ride)}
+                        className={styles.chatButton}
+                      >
+                        Contact Driver
+                      </button>
+                    </div>
+                  </div>
+                  <div className={styles.detailsGrid}>
+                    <div>
+                      <div className={styles.detailItem}>
+                        <p className={styles.detailLabel}>Driver</p>
+                        <p className={styles.detailValue}>{ride.driver.name}</p>
+                      </div>
+                      <div className={styles.detailItem}>
+                        <p className={styles.detailLabel}>Route</p>
+                        <p className={styles.detailValue}>
+                          {ride.route.start} → {ride.route.stops.join(" → ")} → {ride.route.end}
+                        </p>
+                      </div>
+                      <div className={styles.detailItem}>
+                        <p className={styles.detailLabel}>Schedule</p>
+                        <p className={styles.detailValue}>
+                          {ride.schedule.date} at {ride.schedule.time}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.detailItem}>
+                        <p className={styles.detailLabel}>Cost</p>
+                        <p className={styles.detailValue}>${ride.cost}</p>
+                      </div>
+                      <div className={styles.detailItem}>
+                        <p className={styles.detailLabel}>Preferences</p>
+                        <p className={styles.detailValue}>{ride.preferences || "None"}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {isRequestModalOpen && selectedPost && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modal}>
+                <h2 className={styles.modalTitle}>Request to Join Ride</h2>
+                <p>
+                  You are requesting to join the ride from <strong>{selectedPost.route.start}</strong> to{" "}
+                  <strong>{selectedPost.route.end}</strong> on <strong>{selectedPost.schedule.date}</strong> at{" "}
+                  <strong>{selectedPost.schedule.time}</strong>.
+                </p>
+                <p>Driver: <strong>{selectedPost.driver.name}</strong></p>
+                <p>Cost: <strong>${selectedPost.cost}</strong></p>
+                <div className={styles.modalActions}>
+                  <button onClick={handleRequestRide} className={styles.submitButton}>
+                    Confirm Request
+                  </button>
+                  <button
+                    onClick={() => setIsRequestModalOpen(false)}
+                    className={styles.cancelButton}
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>
-              <div className={styles.detailsGrid}>
-                <div>
-                  <div className={styles.detailItem}>
-                    <p className={styles.detailLabel}>Driver</p>
-                    <p className={styles.detailValue}>{ride.driver.name}</p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <p className={styles.detailLabel}>Route</p>
-                    <p className={styles.detailValue}>
-                      {ride.route.start} → {ride.route.stops.join(" → ")} → {ride.route.end}
-                    </p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <p className={styles.detailLabel}>Schedule</p>
-                    <p className={styles.detailValue}>
-                      {ride.schedule.date} at {ride.schedule.time}
-                    </p>
-                  </div>
+            </div>
+          )}
+
+          {isChatModalOpen && selectedPost && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modal}>
+                <h2 className={styles.modalTitle}>Chat with {selectedPost.driver.name}</h2>
+                <div className={styles.chatMessages}>
+                  {messages
+                    .filter(
+                      (msg) =>
+                        (msg.sender.email === currentUser.email &&
+                          msg.recipient.email === selectedPost.driver.email) ||
+                        (msg.sender.email === selectedPost.driver.email &&
+                          msg.recipient.email === currentUser.email)
+                    )
+                    .map((msg) => (
+                      <div
+                        key={msg.id}
+                        className={
+                          msg.sender.email === currentUser.email
+                            ? styles.messageSent
+                            : styles.messageReceived
+                        }
+                      >
+                        <p>{msg.content}</p>
+                        <span className={styles.messageTimestamp}>
+                          {new Date(msg.timestamp).toLocaleTimeString()}
+                        </span>
+                      </div>
+                    ))}
                 </div>
-                <div>
-                  <div className={styles.detailItem}>
-                    <p className={styles.detailLabel}>Cost</p>
-                    <p className={styles.detailValue}>${ride.cost}</p>
-                  </div>
-                  <div className={styles.detailItem}>
-                    <p className={styles.detailLabel}>Preferences</p>
-                    <p className={styles.detailValue}>{ride.preferences || "None"}</p>
-                  </div>
-                </div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const content = (e.target as any).message.value;
+                    if (content) {
+                      handleSendMessage(content);
+                      (e.target as any).message.value = "";
+                    }
+                  }}
+                  className={styles.chatForm}
+                >
+                  <input
+                    type="text"
+                    name="message"
+                    placeholder="Type your message..."
+                    className={styles.chatInput}
+                  />
+                  <button type="submit" className={styles.submitButton}>
+                    Send
+                  </button>
+                </form>
+                <button
+                  onClick={() => setIsChatModalOpen(false)}
+                  className={styles.cancelButton}
+                >
+                  Close
+                </button>
               </div>
             </div>
-          ))}
-        </section>
-      )}
-
-      {/* Request Ride Modal */}
-      {isRequestModalOpen && selectedPost && (
-        <div className={styles.modalOverlay}>
-          <div className={`${styles.modal} ${styles.fadeIn}`}>
-            <h2 className={styles.modalTitle}>Request to Join Ride</h2>
-            <p>
-              You are requesting to join the ride from <strong>{selectedPost.route.start}</strong> to{" "}
-              <strong>{selectedPost.route.end}</strong> on <strong>{selectedPost.schedule.date}</strong> at{" "}
-              <strong>{selectedPost.schedule.time}</strong>.
-            </p>
-            <p>Driver: <strong>{selectedPost.driver.name}</strong></p>
-            <p>Cost: <strong>${selectedPost.cost}</strong></p>
-            <div className={styles.modalActions}>
-              <button onClick={handleRequestRide} className={styles.submitButton}>
-                Confirm Request
-              </button>
-              <button
-                onClick={() => setIsRequestModalOpen(false)}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      )}
-
-      {/* Chat Modal */}
-      {isChatModalOpen && selectedPost && (
-        <div className={styles.modalOverlay}>
-          <div className={`${styles.modal} ${styles.fadeIn}`}>
-            <h2 className={styles.modalTitle}>Chat with {selectedPost.driver.name}</h2>
-            <div className={styles.chatMessages}>
-              {messages
-                .filter(
-                  (msg) =>
-                    (msg.sender.email === currentUser.email &&
-                      msg.recipient.email === selectedPost.driver.email) ||
-                    (msg.sender.email === selectedPost.driver.email &&
-                      msg.recipient.email === currentUser.email)
-                )
-                .map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={
-                      msg.sender.email === currentUser.email
-                        ? styles.messageSent
-                        : styles.messageReceived
-                    }
-                  >
-                    <p>{msg.content}</p>
-                    <span className={styles.messageTimestamp}>
-                      {new Date(msg.timestamp).toLocaleTimeString()}
-                    </span>
-                  </div>
-                ))}
-            </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const content = (e.target as any).message.value;
-                if (content) {
-                  handleSendMessage(content);
-                  (e.target as any).message.value = "";
-                }
-              }}
-              className={styles.chatForm}
-            >
-              <input
-                type="text"
-                name="message"
-                placeholder="Type your message..."
-                className={styles.chatInput}
-              />
-              <button type="submit" className={styles.submitButton}>
-                Send
-              </button>
-            </form>
-            <button
-              onClick={() => setIsChatModalOpen(false)}
-              className={styles.cancelButton}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      </main>
     </div>
   );
 }

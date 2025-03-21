@@ -40,6 +40,11 @@ const data = {
       icon: Command,
     },
     {
+      title: "Comunity",
+      url: "/comunity",
+      icon: Command,
+    },
+    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: Command,

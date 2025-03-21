@@ -1,11 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import styles from "./BusRouting.module.css";
 
@@ -112,171 +107,179 @@ export default function BusRouting() {
   };
 
   return (
-    <div className={styles.container}>
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <Link href="/dashboard" className="hover:text-primary">
+    <div className={styles.wrapper}>
+      {/* Sidebar */}
+      <aside className={styles.sidebar}>
+        <div className={styles.sidebarHeader}>
+          <h2 className={styles.sidebarTitle}>Navigation</h2>
+        </div>
+        <nav className={styles.sidebarNav}>
+          <Link href="/dashboard" className={styles.sidebarLink}>
             Dashboard
           </Link>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>Bus Routing</BreadcrumbItem>
-      </Breadcrumb>
+          <Link href="/bus-routing" className={styles.sidebarLinkActive}>
+            Bus Routing
+          </Link>
+        </nav>
+      </aside>
 
-      {/* Header */}
-      <header className={styles.header}>
-        <h1 className={styles.headerTitle}>Bus Routes</h1>
-        <p className={styles.headerSubtitle}>
-          Explore campus bus schedules with ease
-        </p>
-      </header>
+      {/* Main Content */}
+      <main className={styles.mainContent}>
+        <div className={styles.container}>
+          <header className={styles.header}>
+            <h1 className={styles.headerTitle}>Bus Routes</h1>
+            <p className={styles.headerSubtitle}>
+              Explore campus bus schedules with ease
+            </p>
+          </header>
 
-      {/* Admin Controls */}
-      {isAdmin && (
-        <section className={styles.adminControls}>
-          <button onClick={openAddForm} className={styles.addButton}>
-            Add New Route
-          </button>
-        </section>
-      )}
-
-      {/* Form for Adding/Updating Routes */}
-      {isAdmin && isFormOpen && (
-        <section className={`${styles.formSection} ${styles.fadeIn}`}>
-          <form
-            onSubmit={formMode === "add" ? handleAddRoute : handleUpdateRoute}
-            className={styles.form}
-          >
-            <h2 className={styles.formTitle}>
-              {formMode === "add" ? "Add New Route" : "Update Route"}
-            </h2>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Route Title</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Stops (comma-separated)</label>
-              <input
-                type="text"
-                name="stops"
-                value={formData.stops}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., Campus, Downtown"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Times (comma-separated)</label>
-              <input
-                type="text"
-                name="times"
-                value={formData.times}
-                onChange={handleInputChange}
-                className={styles.formInput}
-                placeholder="e.g., 08:00, 08:15"
-                required
-              />
-            </div>
-            <div className={styles.formActions}>
-              <button type="submit" className={styles.submitButton}>
-                {formMode === "add" ? "Add Route" : "Update Route"}
+          {/* Admin Controls */}
+          {isAdmin && (
+            <section className={styles.adminControls}>
+              <button onClick={openAddForm} className={styles.addButton}>
+                Add New Route
               </button>
-              <button
-                type="button"
-                onClick={resetForm}
-                className={styles.cancelButton}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </section>
-      )}
+            </section>
+          )}
 
-      {/* Routes List */}
-      <section className={styles.routesSection}>
-        {routes.length === 0 ? (
-          <div className={`${styles.emptyState} ${styles.fadeIn}`}>
-            <p className={styles.emptyStateText}>No routes available yet.</p>
-            {isAdmin && (
-              <p className={styles.emptyStateHint}>
-                Add a new route using the button above.
-              </p>
-            )}
-          </div>
-        ) : (
-          <div>
-            {routes.map((route, index) => (
-              <div
-                key={route.id}
-                className={`${styles.routeCard} ${styles.fadeIn}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+          {/* Form for Adding/Updating Routes */}
+          {isAdmin && isFormOpen && (
+            <section className={styles.formSection}>
+              <form
+                onSubmit={formMode === "add" ? handleAddRoute : handleUpdateRoute}
+                className={styles.form}
               >
-                <div className={styles.routeHeader}>
-                  <h2 className={styles.routeTitle}>{route.title}</h2>
-                  {isAdmin && (
-                    <div className={styles.routeActions}>
-                      <button
-                        onClick={() => openUpdateForm(route)}
-                        className={styles.updateButton}
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => handleDeleteRoute(route.id)}
-                        className={styles.deleteButton}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
+                <h2 className={styles.formTitle}>
+                  {formMode === "add" ? "Add New Route" : "Update Route"}
+                </h2>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Route Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    required
+                  />
                 </div>
-                <div className={styles.detailsGrid}>
-                  <div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Stops</p>
-                      <p className={styles.detailValue}>
-                        {route.routeData.stops.join(" → ")}
-                      </p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Times</p>
-                      <p className={styles.detailValue}>
-                        {route.routeData.times.join(", ")}
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Uploaded By</p>
-                      <p className={styles.detailValue}>{route.admin.name}</p>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <p className={styles.detailLabel}>Created On</p>
-                      <p className={styles.detailValue}>
-                        {new Date(route.createdAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </p>
-                    </div>
-                  </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Stops (comma-separated)</label>
+                  <input
+                    type="text"
+                    name="stops"
+                    value={formData.stops}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., Campus, Downtown"
+                    required
+                  />
                 </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Times (comma-separated)</label>
+                  <input
+                    type="text"
+                    name="times"
+                    value={formData.times}
+                    onChange={handleInputChange}
+                    className={styles.formInput}
+                    placeholder="e.g., 08:00, 08:15"
+                    required
+                  />
+                </div>
+                <div className={styles.formActions}>
+                  <button type="submit" className={styles.submitButton}>
+                    {formMode === "add" ? "Add Route" : "Update Route"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className={styles.cancelButton}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </section>
+          )}
+
+          {/* Routes List */}
+          <section className={styles.routesSection}>
+            {routes.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p className={styles.emptyStateText}>No routes available yet.</p>
+                {isAdmin && (
+                  <p className={styles.emptyStateHint}>
+                    Add a new route using the button above.
+                  </p>
+                )}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
+            ) : (
+              <div>
+                {routes.map((route, index) => (
+                  <div
+                    key={route.id}
+                    className={styles.routeCard}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className={styles.routeHeader}>
+                      <h2 className={styles.routeTitle}>{route.title}</h2>
+                      {isAdmin && (
+                        <div className={styles.routeActions}>
+                          <button
+                            onClick={() => openUpdateForm(route)}
+                            className={styles.updateButton}
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={() => handleDeleteRoute(route.id)}
+                            className={styles.deleteButton}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.detailsGrid}>
+                      <div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Stops</p>
+                          <p className={styles.detailValue}>
+                            {route.routeData.stops.join(" → ")}
+                          </p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Times</p>
+                          <p className={styles.detailValue}>
+                            {route.routeData.times.join(", ")}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Uploaded By</p>
+                          <p className={styles.detailValue}>{route.admin.name}</p>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <p className={styles.detailLabel}>Created On</p>
+                          <p className={styles.detailValue}>
+                            {new Date(route.createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
